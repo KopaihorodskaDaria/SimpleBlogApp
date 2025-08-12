@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Posts List{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('style.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/comments.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="blog-header">
+        <h1>One moment in life</h1>
+        <p>One photo – One post</p>
+    </div>
+
+    <div class="container">
+        <h1>All Posts</h1>
+
+        {% for post in posts %}
+            <div class="post-item" data-post-id="{{ post.id }}">
+                <h2>{{ post.title }}</h2>
+                <p>{{ post.content }}</p>
+
+                {% if post.image %}
+                    <img src="{{ asset('uploads/' ~ post.image) }}" alt="Post image" class="post-image">
+                {% endif %}
+
+                <p><button class="btn-comment-toggle" data-post-id="{{ post.id }}">💬 Comments</button></p>
+
+                <div class="comment-panel" id="comment-panel-{{ post.id }}" style="display: none;"></div>
+
+                {% if app.user %}
+                    <div class="post-actions">
+
+                        {% if post.author == app.user %}
+                            <a href="{{ path('app_post_update', { id: post.id }) }}" class="btn btn-edit">Edit</a>
+                        {% endif %}
+
+                        {% if post.author == app.user or is_granted('ROLE_ADMIN') %}
+                            <form method="post" action="{{ path('app_post_delete', { id: post.id }) }}"
+                                  onsubmit="return confirm('Are you sure you want to delete this post?');"
+                                  style="display:inline;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete_post_' ~ post.id) }}">
+                                <button type="submit" class="btn btn-delete">Delete</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <p>No posts yet.</p>
+        {% endfor %}
+
+        <a href="{{ path('app_post_new') }}" class="btn btn-create">Create new post</a>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="admin-panel-link" style="margin-top: 2rem;">
+                <a href="{{ path('admin_users_list') }}" class="btn btn-admin">👥 Manage Users</a>
+            </div>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+
+

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User List{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>User List</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.isBanned ? '❌ BANNED' : '✅ Active' }}</td>
+                    <td>
+                        <a href="{{ path('admin_warn_user', { id: user.id }) }}" class="btn btn-sm">Warn</a>
+
+                        {% if not user.isBanned %}
+                            <a href="{{ path('admin_ban_user', { id: user.id }) }}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Are you sure you want to ban this user?');">Ban</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+

@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="comment-list">
+
+    {% for comment in comments %}
+        <div class="comment">
+            <strong>{{ comment.author.username }}</strong>
+            <small>{{ comment.createdAt|date('Y-m-d H:i') }}</small>
+            <p>{{ comment.context }}</p>
+
+            {% if app.user  %}
+                {% if comment.author == app.user %}
+                    <a href="{{ path('app_comment_update', { id: comment.id }) }}" class="btn btn-sm">Edit</a>
+                {% endif %}
+                {% if comment.author == app.user or is_granted('ROLE_ADMIN') %}
+
+                <form method="post" action="{{ path('app_comment_delete', { id: comment.id }) }}"
+                      onsubmit="return confirm('Are you sure you want to delete your comment?');"
+                      style="display:inline;">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete_comment_' ~ comment.id) }}">
+                    <button type="submit" class="btn btn-sm btn-delete">Delete</button>
+                </form>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% else %}
+        <p>There are no comments.</p>
+    {% endfor %}
+
+    {% if app.user %}
+        <form method="post" action="{{ path('app_comment_new', { id: post.id }) }}">
+            {{ form_start(comment_form) }}
+            {{ form_row(comment_form.context) }}
+            <button class="btn btn-sm">Add comment</button>
+            {{ form_end(comment_form) }}
+        </form>
+    {% else %}
+        <p>If you want to write comment, <a href="{{ path('app_login') }}">login</a>.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+

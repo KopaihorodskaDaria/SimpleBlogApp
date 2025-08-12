@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Comment update{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2>Comment editing</h2>
+
+        {{ form_start(form) }}
+        {{ form_row(form.context) }}
+        <button class="btn btn-sm">Save changes</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_post_index') }}" class="btn btn-sm">⬅ Back</a>
+    </div>
+{% endblock %}

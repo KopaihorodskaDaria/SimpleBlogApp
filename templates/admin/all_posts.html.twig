@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All posts{% endblock %}
+
+{% block body %}
+
+{% for post in posts %}
+    <div>
+        <strong>{{ post.title }}</strong> — {{ post.author.email }}
+        <form method="post" action="{{ path('app_post_delete', {id: post.id}) }}" onsubmit="return confirm('dalete post?');">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete_post_' ~ post.id) }}">
+            <button>Delete</button>
+        </form>
+    </div>
+{% endfor %}
+
+{% endblock %}
