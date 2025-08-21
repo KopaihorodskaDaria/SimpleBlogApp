@@ -1,23 +1,13 @@
 # Symfony Simple Blog App
 
-This is a simple blog app built with Symfony 7 and PHP 8. Users can sign up, confirm their email, log in, write posts, and comment on them. The app has security features that make sure only verified users can log in, and it blocks banned users from accessing the site.
-There is also an admin who manages the content. The admin can delete posts and comments, and ban users. Before banning, the admin sends a warning email to the user.
+A simple blog application built with Symfony 7 and PHP 8. Users can register, confirm email, log in, write posts, and comment. Admins manage content and moderate users. Security features ensure only verified users can log in, and banned users are blocked.
 
-**Features**
-Users can:
-- Register and confirm their email address
-- Log in securely
-- Create, edit, and delete their own posts
-- Add comments to posts, edit and delete them
-
-The app includes security features to restrict access:
-- Only users with verified emails can log in
-- Banned users are prevented from logging in
-
-Admin  can:
-- Manage content by deleting any post or comment
-- Ban users who violate rules
-- Before banning, the admin sends a warning email to the user to notify them
+**Key Features**
+- User registration, email confirmation, and secure login
+- Create, edit, delete posts
+- Comment on posts, edit and delete own comments
+- Access control: only verified users can log in; banned users blocked
+- Admin moderation: delete any post/comment, ban users with warning emails
 
 **Technologies**
 - PHP 8+
@@ -31,7 +21,7 @@ Admin  can:
 - Docker / Docker Compose
 - HTML5, CSS3, JavaScript
 
-**Running the Project**
+**Installation / Setup**
 1. Make sure you have Docker and Docker Compose installed.
 2. Clone the repository
 3. Build and start the Docker containers
